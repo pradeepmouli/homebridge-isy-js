@@ -21,17 +21,17 @@ class ISYGarageDoorAccessory extends ISYAccessory_1.ISYAccessory {
         }
     }
     getSensorState() {
-        if (this.alternate) {
-            return !this.device.state;
-        }
-        else {
-            return this.device.state;
-        }
+        let openState = this.alternate ? 0 : 100;
+        return this.device['ST'] == openState;
     }
     // Handles an identify request
     sendGarageDoorCommand(callback) {
-        this.relayDevice.sendLightCommand(true, function () {
-            callback();
+        this.relayDevice.sendCommand('DON').then(() => {
+            setTimeout(() => {
+                this.relayDevice.sendCommand('DOF').then(() => {
+                    callback();
+                });
+            }, 2000);
         });
     }
     // Handles a set to the target lock state. Will ignore redundant commands.
@@ -52,8 +52,10 @@ class ISYGarageDoorAccessory extends ISYAccessory_1.ISYAccessory {
         }
         else if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.CLOSED) {
             if (targetState === plugin_1.Characteristic.TargetDoorState.OPEN) {
-                this.logger.info(`GARAGE: Current state is closed and target is open. Waiting for sensor change to trigger opening state`);
+                this.logger.info(`GARAGE: Current state is closed and target is open. Changing state to opening and sending command`);
+                this.primaryService.setCharacteristic(plugin_1.Characteristic.CurrentDoorState, plugin_1.Characteristic.CurrentDoorState.OPENING);
                 this.sendGarageDoorCommand(callback);
+                setTimeout(that.completeOpen.bind(that), that.timeToOpen);
                 return;
             }
         }
@@ -70,7 +72,7 @@ class ISYGarageDoorAccessory extends ISYAccessory_1.ISYAccessory {
                 this.logger.info(`GARAGE: ${this.device.name} Current state is closing and target is open. Sending command and setting timeout to complete`);
                 this.primaryService.setCharacteristic(plugin_1.Characteristic.CurrentDoorState, plugin_1.Characteristic.CurrentDoorState.OPENING);
                 this.sendGarageDoorCommand(() => {
-                    that.sendGarageDoorCommand(callback);
+                    setTimeout(() => that.sendGarageDoorCommand(callback), 3000);
                     setTimeout(that.completeOpen.bind(that), that.timeToOpen);
                 });
             }
@@ -90,7 +92,7 @@ class ISYGarageDoorAccessory extends ISYAccessory_1.ISYAccessory {
     }
     completeOpen() {
         if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.OPENING) {
-            this.logger.info('Current door has bee opening long enough, marking open');
+            this.logger.info('Current door has been opening long enough, marking open');
             this.primaryService.setCharacteristic(plugin_1.Characteristic.CurrentDoorState, plugin_1.Characteristic.CurrentDoorState.OPEN);
         }
         else {
@@ -102,31 +104,31 @@ class ISYGarageDoorAccessory extends ISYAccessory_1.ISYAccessory {
         super.handlePropertyChange(propertyName, value, oldValue, formattedValue);
         if (this.getSensorState()) {
             if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.OPEN) {
-                this.logger.info(`GARAGE:  ${this.device.name}Current state of door is open and now sensor matches. No action to take`);
+                this.logger.info(`GARAGE:  ${this.device.name} Current state of door is open and now sensor matches. No action to take`);
             }
             else if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.CLOSED) {
-                this.logger.info(`GARAGE:  ${this.device.name}Current state of door is closed and now sensor says open. Setting state to opening`);
+                this.logger.info(`GARAGE:  ${this.device.name} Current state of door is closed and now sensor says open. Setting state to opening`);
                 this.primaryService.setCharacteristic(plugin_1.Characteristic.CurrentDoorState, plugin_1.Characteristic.CurrentDoorState.OPENING);
                 this.targetGarageState = plugin_1.Characteristic.TargetDoorState.OPEN;
                 this.primaryService.setCharacteristic(plugin_1.Characteristic.TargetDoorState, plugin_1.Characteristic.CurrentDoorState.OPEN);
                 setTimeout(this.completeOpen.bind(this), this.timeToOpen);
             }
             else if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.OPENING) {
-                this.logger.info(`GARAGE:  ${this.device.name}Current state of door is opening and now sensor matches. No action to take`);
+                this.logger.info(`GARAGE:  ${this.device.name} Current state of door is opening and now sensor says open. waiting for timeout`);
             }
             else if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.CLOSING) {
-                this.logger.info('GARAGE: C ' + this.device.name + 'Current state of door is closing and now sensor matches. No action to take');
+                this.logger.info(`GARAGE:  ${this.device.name} Current state of door is closing and sensor says opened, waiting for sensor`);
             }
         }
         else {
             if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.OPEN) {
-                this.logger.info(`GARAGE:  ${this.device.name}Current state of door is open and now sensor shows closed. Setting current state to closed`);
+                this.logger.info(`GARAGE:  ${this.device.name} Current state of door is open and now sensor shows closed. Setting current state to closed`);
                 this.primaryService.setCharacteristic(plugin_1.Characteristic.CurrentDoorState, plugin_1.Characteristic.CurrentDoorState.CLOSED);
                 this.targetGarageState = plugin_1.Characteristic.TargetDoorState.CLOSED;
                 this.primaryService.setCharacteristic(plugin_1.Characteristic.TargetDoorState, plugin_1.Characteristic.TargetDoorState.CLOSED);
             }
             else if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.CLOSED) {
-                this.logger.info(`GARAGE:  ${this.device.name}Current state of door is closed and now sensor shows closed. No action to take`);
+                this.logger.info(`GARAGE:  ${this.device.name} Current state of door is closed and now sensor shows closed. No action to take`);
             }
             else if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.OPENING) {
                 this.logger.info(`GARAGE:  ${this.device.name} Current state of door is opening and now sensor shows closed. Setting current state to closed`);
@@ -135,7 +137,7 @@ class ISYGarageDoorAccessory extends ISYAccessory_1.ISYAccessory {
                 this.primaryService.setCharacteristic(plugin_1.Characteristic.TargetDoorState, plugin_1.Characteristic.TargetDoorState.CLOSED);
             }
             else if (this.currentGarageState === plugin_1.Characteristic.CurrentDoorState.CLOSING) {
-                this.logger.info(`GARAGE:  ${this.device.name}Current state of door is closing and now sensor shows closed. Setting current state to closed`);
+                this.logger.info(`GARAGE:  ${this.device.name} Current state of door is closing and now sensor shows closed. Setting current state to closed`);
                 this.primaryService.setCharacteristic(plugin_1.Characteristic.CurrentDoorState, plugin_1.Characteristic.CurrentDoorState.CLOSED);
                 this.targetGarageState = plugin_1.Characteristic.TargetDoorState.CLOSED;
                 this.primaryService.setCharacteristic(plugin_1.Characteristic.TargetDoorState, plugin_1.Characteristic.TargetDoorState.CLOSED);
@@ -150,11 +152,11 @@ class ISYGarageDoorAccessory extends ISYAccessory_1.ISYAccessory {
         super.setupServices();
         const primaryService = this.platformAccessory.getOrAddService(plugin_1.Service.GarageDoorOpener);
         this.primaryService = primaryService;
-        primaryService.getCharacteristic(plugin_1.Characteristic.TargetDoorState).on("set" /* SET */, this.setTargetDoorState.bind(this));
-        primaryService.getCharacteristic(plugin_1.Characteristic.TargetDoorState).on("get" /* GET */, this.getTargetDoorState.bind(this));
-        primaryService.getCharacteristic(plugin_1.Characteristic.CurrentDoorState).on("get" /* GET */, this.getCurrentDoorState.bind(this));
-        primaryService.getCharacteristic(plugin_1.Characteristic.CurrentDoorState).on("set" /* SET */, this.setCurrentDoorState.bind(this));
-        primaryService.getCharacteristic(plugin_1.Characteristic.ObstructionDetected).on("get" /* GET */, this.getObstructionState.bind(this));
+        primaryService.getCharacteristic(plugin_1.Characteristic.TargetDoorState).on("set" /* CharacteristicEventTypes.SET */, this.setTargetDoorState.bind(this));
+        primaryService.getCharacteristic(plugin_1.Characteristic.TargetDoorState).on("get" /* CharacteristicEventTypes.GET */, this.getTargetDoorState.bind(this));
+        primaryService.getCharacteristic(plugin_1.Characteristic.CurrentDoorState).on("get" /* CharacteristicEventTypes.GET */, this.getCurrentDoorState.bind(this));
+        primaryService.getCharacteristic(plugin_1.Characteristic.CurrentDoorState).on("set" /* CharacteristicEventTypes.SET */, this.setCurrentDoorState.bind(this));
+        primaryService.getCharacteristic(plugin_1.Characteristic.ObstructionDetected).on("get" /* CharacteristicEventTypes.GET */, this.getObstructionState.bind(this));
     }
 }
 exports.ISYGarageDoorAccessory = ISYGarageDoorAccessory;
