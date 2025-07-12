@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.5.0-rc22 (2024-07-12)
+
+### UPDATES FOR LATEST ISY-NODEJS AND HOMEBRIDGE 2.0 COMPATIBILITY
+
+    1. Fixed TypeScript compilation errors for modern TypeScript versions
+    2. Updated build process to support latest toolchain
+    3. Improved type safety for fan speed conversions and characteristic handling
+    4. Added homebridge 2.0 compatibility in package.json engines field
+    5. Fixed module import issues and UUID property access
+    6. Added build artifacts to .gitignore
+    7. Maintained compatibility with isy-nodejs@0.5.0-beta.55 (latest stable beta)
+
 ## 0.5.0-rc21 (7-16-2020)
 
 ### MINOR FIXES - UPDATES FOR ZWAVE ISSUES AND FATAL ERRORS IN FUTURE RELEASE

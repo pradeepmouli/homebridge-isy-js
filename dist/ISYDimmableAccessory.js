@@ -7,7 +7,7 @@ require("./utils");
 class ISYDimmableAccessory extends ISYRelayAccessory_1.ISYRelayAccessory {
     constructor(device, platform) {
         super(device, platform);
-        this.category = 5 /* LIGHTBULB */;
+        this.category = 5 /* Categories.LIGHTBULB */;
     }
     // Handles the identify command
     map(propertyName, propertyValue) {

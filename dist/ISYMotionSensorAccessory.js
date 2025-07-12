@@ -25,7 +25,7 @@ class ISYMotionSensorAccessory extends ISYDeviceAccessory_1.ISYDeviceAccessory {
         // let o = super(propertyValue,propertyValue);
         switch (propertyName) {
             case 'CLITEMP':
-                return { characteristicValue: utils_1.toCelsius(propertyValue), characteristic: plugin_1.Characteristic.CurrentTemperature, service: this.temperatureSensorService };
+                return { characteristicValue: (0, utils_1.toCelsius)(propertyValue), characteristic: plugin_1.Characteristic.CurrentTemperature, service: this.temperatureSensorService };
             case 'BATLVL':
                 return { characteristicValue: propertyValue, characteristic: plugin_1.Characteristic.BatteryLevel, service: this.batteryLevelService };
             case 'ST':
@@ -50,7 +50,7 @@ class ISYMotionSensorAccessory extends ISYDeviceAccessory_1.ISYDeviceAccessory {
         super.setupServices();
         this.primaryService = this.motionSensorService;
         this.motionSensorService.getCharacteristic(plugin_1.Characteristic.MotionDetected).onGet(() => this.device.isMotionDetected);
-        this.temperatureSensorService.getCharacteristic(plugin_1.Characteristic.CurrentTemperature).onGet(() => utils_1.toCelsius(this.device.CLITEMP));
+        this.temperatureSensorService.getCharacteristic(plugin_1.Characteristic.CurrentTemperature).onGet(() => (0, utils_1.toCelsius)(this.device.CLITEMP));
         this.batteryLevelService.getCharacteristic(plugin_1.Characteristic.BatteryLevel).onGet(() => this.device.BATLVL);
         this.lightSensorService.getCharacteristic(plugin_1.Characteristic.CurrentAmbientLightLevel).onGet(() => this.device.LUMIN);
     }

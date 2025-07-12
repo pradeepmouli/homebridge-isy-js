@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ISYPlatform = void 0;
 const fs_1 = require("fs");
 const isy_nodejs_1 = require("isy-nodejs");
+const InsteonMotionSensorDevice_1 = require("isy-nodejs/lib/Devices/Insteon/InsteonMotionSensorDevice");
 const ISYDimmableAccessory_1 = require("./ISYDimmableAccessory");
 const ISYDoorWindowSensorAccessory_1 = require("./ISYDoorWindowSensorAccessory");
 const ISYElkAlarmPanelAccessory_1 = require("./ISYElkAlarmPanelAccessory");
@@ -36,17 +37,17 @@ class ISYPlatform {
         this.password = config.password;
         this.elkEnabled = (_a = config.elkEnabled) !== null && _a !== void 0 ? _a : false;
         this.debugLoggingEnabled = (_b = config.debugLoggingEnabled) !== null && _b !== void 0 ? _b : false;
-        this.config = utils_1.cleanConfig(config);
+        this.config = (0, utils_1.cleanConfig)(config);
         const self = this;
-        fs_1.writeFile(`${homebridge.user.storagePath()}/effectiveConfig.json`, JSON.stringify(this.config, null, '\t'), null, () => self.log('platform config saved to :', `${homebridge.user.storagePath()}/effectiveConfig.json`));
+        (0, fs_1.writeFile)(`${homebridge.user.storagePath()}/effectiveConfig.json`, JSON.stringify(this.config, null, '\t'), null, () => self.log('platform config saved to :', `${homebridge.user.storagePath()}/effectiveConfig.json`));
         this.homebridge = homebridge;
         ISYPlatform.Instance = this;
         config.address = this.host;
         config.displayNameFormat = (_c = config.deviceNaming) === null || _c === void 0 ? void 0 : _c.format;
-        const isylog = utils_1.clone(log, 'isy-nodejs');
+        const isylog = (0, utils_1.clone)(log, 'isy-nodejs');
         this.isy = new isy_nodejs_1.ISY(config, isylog, homebridge.user.storagePath());
         const p = this.createAccessories();
-        homebridge.on("didFinishLaunching" /* DID_FINISH_LAUNCHING */, async () => {
+        homebridge.on("didFinishLaunching" /* APIEvent.DID_FINISH_LAUNCHING */, async () => {
             self.log('Homebridge Launched');
             await p;
             self.log('ISY API Initialized');
@@ -79,7 +80,7 @@ class ISYPlatform {
         const configs = this.deviceConfigMap.get(device.address);
         if ((_a = this.config.deviceDefaults) === null || _a === void 0 ? void 0 : _a.exclude) {
             const include = configs.find((q, r, z) => {
-                return utils_1.isMatch(device, q.filter) && !q.exclude;
+                return (0, utils_1.isMatch)(device, q.filter) && !q.exclude;
             });
             if (include) {
                 this.log(`Device: ${device.displayName}`, ' will be included due to rule: ', JSON.stringify(include));
@@ -91,7 +92,7 @@ class ISYPlatform {
             const ignore = configs === null || configs === void 0 ? void 0 : configs.find((p, q, r) => p.exclude);
             if (ignore) {
                 const include = configs.find((q, r, z) => {
-                    return utils_1.isMatch(device, q.filter) && !q.exclude;
+                    return (0, utils_1.isMatch)(device, q.filter) && !q.exclude;
                 });
                 if (include) {
                     this.log(`Device: ${device.displayName} would have been ignored due to rule: `, JSON.stringify(ignore), 'but will be included due to rule: ', JSON.stringify(include));
@@ -209,7 +210,7 @@ class ISYPlatform {
             for (const device of deviceList.values()) {
                 const configs = [];
                 for (const config of that.config.devices) {
-                    if (utils_1.isMatch(device, config.filter)) {
+                    if ((0, utils_1.isMatch)(device, config.filter)) {
                         configs.push(config);
                         /* 		this.log.debug('Config', JSON.stringify(config, null, '\t'),
                                     'added for device', `${device.name}(${device.displayName})`); */
@@ -220,7 +221,7 @@ class ISYPlatform {
             for (const device of that.isy.sceneList.values()) {
                 const configs = [];
                 for (const config of that.config.devices) {
-                    if (utils_1.isMatch(device, config.filter)) {
+                    if ((0, utils_1.isMatch)(device, config.filter)) {
                         configs.push(config);
                         /* 	this.log.debug('Config', JSON.stringify(config, null, '\t'),
                                 'added for scene', device.name + '(' + device.displayName + ')'); */
@@ -296,43 +297,43 @@ class ISYPlatform {
         });
     }
     createAccessory(device) {
-        if (device instanceof isy_nodejs_1.InsteonKeypadDimmerDevice) {
+        if (device instanceof InsteonKeypadDimmerDevice) {
             return new ISYKeypadDimmerAccessory_1.ISYKeypadDimmerAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonDimmableDevice) {
+        else if (device instanceof InsteonDimmableDevice) {
             return new ISYDimmableAccessory_1.ISYDimmableAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonRelayDevice) {
+        else if (device instanceof InsteonRelayDevice) {
             return new ISYRelayAccessory_1.ISYRelayAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonLockDevice) {
+        else if (device instanceof InsteonLockDevice) {
             return new ISYLockAccessory_1.ISYLockAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonOutletDevice) {
+        else if (device instanceof InsteonOutletDevice) {
             return new ISYOutletAccessory_1.ISYOutletAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonLeakSensorDevice) {
+        else if (device instanceof InsteonLeakSensorDevice) {
             return new ISYLeakSensorAccessory_1.ISYLeakSensorAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonSmokeSensorDevice) {
+        else if (device instanceof InsteonSmokeSensorDevice) {
             return new ISYSmokeSensorAccessory_1.ISYSmokeSensorAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonFanDevice) {
+        else if (device instanceof InsteonFanDevice) {
             return new ISYFanAccessory_1.ISYFanAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonDoorWindowSensorDevice) {
+        else if (device instanceof InsteonDoorWindowSensorDevice) {
             return new ISYDoorWindowSensorAccessory_1.ISYDoorWindowSensorAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.ELKAlarmPanelDevice) {
+        else if (device instanceof ELKAlarmPanelDevice) {
             return new ISYElkAlarmPanelAccessory_1.ISYElkAlarmPanelAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonMotionSensorDevice) {
+        else if (device instanceof InsteonMotionSensorDevice_1.InsteonMotionSensorDevice) {
             return new ISYMotionSensorAccessory_1.ISYMotionSensorAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonThermostatDevice) {
+        else if (device instanceof InsteonThermostatDevice) {
             return new ISYThermostatAccessory_1.ISYThermostatAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonLeakSensorDevice) {
+        else if (device instanceof InsteonLeakSensorDevice) {
             return new ISYLeakSensorAccessory_1.ISYLeakSensorAccessory(device, this);
         }
         return null;

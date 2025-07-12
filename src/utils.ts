@@ -3,7 +3,7 @@ import { CharacteristicEventTypes, CharacteristicGetCallback, CharacteristicSetC
 import * as HB from 'homebridge';
 
 import { Logger, Logging } from 'homebridge/lib/logger';
-import { Family, ISYDevice, ISYNode, ISYScene } from 'isy-nodejs';
+import { Family, DeviceNode, Node as ISYNode, Scene as ISYScene } from 'isy-nodejs';
 import { DeviceConfig, DeviceConfigDetail, DeviceFilterRule, IgnoreDeviceRule, PlatformConfig, RenameDeviceRule } from 'typings/config';
 import { ISYPlatform } from './ISYPlatform';
 import { Characteristic, PlatformAccessory } from './plugin';
@@ -45,7 +45,7 @@ export function isMatch(device: ISYNode, filter: DeviceFilterRule): boolean {
 		return t;
 	}
 	if (filter.typeCode) {
-		if (device instanceof ISYDevice) {
+		if (device instanceof DeviceNode) {
 			return device.typeCode.includes(filter.typeCode);
 		}
 	}
@@ -205,9 +205,9 @@ export function onGet<T extends CharacteristicValue>(character: HB.Characteristi
 type T = typeof Characteristic;
 
 // tslint:disable-next-line: new-parens
-export function isType<K extends WithUUID<{new ():HB.Characteristic}>>(instance: HB.Characteristic, characteristic?: K)
+export function isType<K extends WithUUID<{new ():HB.Characteristic}>>(instance: HB.Characteristic, characteristic: K)
 {
-	return instance instanceof characteristic || instance.UUID === characteristic.UUID;
+	return characteristic && (instance instanceof characteristic || (instance as any).UUID === (characteristic as any).UUID);
 }
 
 // declare module 'homebridge/node_modules/homebridge/node_modules/hap-nodejs/dist/lib/Service' {

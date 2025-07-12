@@ -1,8 +1,8 @@
-import { InsteonDimmableDevice } from 'isy-nodejs';
+import { Devices } from 'isy-nodejs';
 import { ISYPlatform } from './ISYPlatform';
 import { ISYRelayAccessory } from './ISYRelayAccessory';
 import './utils';
-export declare class ISYDimmableAccessory<T extends InsteonDimmableDevice> extends ISYRelayAccessory<T> {
+export declare class ISYDimmableAccessory<T extends Devices.Insteon.DimmerLamp | Devices.Insteon.DimmerSwitch | Devices.Insteon.DimmerLampSwitch> extends ISYRelayAccessory<T> {
     constructor(device: T, platform: ISYPlatform);
     map(propertyName: keyof T, propertyValue: any): {
         characteristicValue: import("hap-nodejs").CharacteristicValue;

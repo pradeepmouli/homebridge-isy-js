@@ -52,11 +52,12 @@ export class ISYFanAccessory extends ISYDeviceAccessory<InsteonFanDevice, Catego
 		if (isType(characteristic,Characteristic.RotationSpeed)) {
 			this.logger.debug('Characteristic is RotationSpeed');
 
-			if (value > 66.6) {
+			const numValue = Number(value);
+			if (numValue > 66.6) {
 				return States.Fan.High;
-			} else if (value > 33.3) {
+			} else if (numValue > 33.3) {
 				return States.Fan.Medium;
-			} else if (value > 0) {
+			} else if (numValue > 0) {
 				return States.Fan.Low;
 			}
 			return States.Off;

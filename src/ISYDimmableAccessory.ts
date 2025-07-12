@@ -1,12 +1,12 @@
 
 import { Categories } from 'hap-nodejs';
-import { InsteonDimmableDevice } from 'isy-nodejs';
+import { Devices } from 'isy-nodejs';
 import { ISYPlatform } from './ISYPlatform';
 import { ISYRelayAccessory } from './ISYRelayAccessory';
 import { Characteristic, Service } from './plugin';
 import './utils';
 
-export class ISYDimmableAccessory<T extends InsteonDimmableDevice> extends ISYRelayAccessory<T> {
+export class ISYDimmableAccessory<T extends Devices.Insteon.DimmerLamp | Devices.Insteon.DimmerSwitch | Devices.Insteon.DimmerLampSwitch> extends ISYRelayAccessory<T> {
 	constructor(device: T, platform: ISYPlatform)  {
 		super(device, platform);
 		this.category = Categories.LIGHTBULB;

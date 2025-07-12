@@ -1,5 +1,5 @@
 import { API, DynamicPlatformPlugin, Logging, PlatformAccessory } from 'homebridge';
-import { ISY, ISYDevice, ISYNode } from 'isy-nodejs';
+import { ISY, Node as ISYNode } from 'isy-nodejs';
 import { DeviceConfig, PlatformConfig } from '../typings/config';
 import { ISYAccessory } from './ISYAccessory';
 import './utils';

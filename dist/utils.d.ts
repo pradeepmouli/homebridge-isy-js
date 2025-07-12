@@ -2,7 +2,7 @@ import * as log4js from '@log4js-node/log4js-api';
 import { CharacteristicGetCallback, CharacteristicSetCallback, CharacteristicValue, Service, WithUUID } from 'hap-nodejs';
 import * as HB from 'homebridge';
 import { Logging } from 'homebridge/lib/logger';
-import { ISYNode } from 'isy-nodejs';
+import { Node as ISYNode } from 'isy-nodejs';
 import { DeviceFilterRule, PlatformConfig } from 'typings/config';
 export declare const didFinishLaunching: symbol;
 export declare let Hap: any;
@@ -19,7 +19,7 @@ export declare function toFahrenheit(temp: number): any;
 export declare function onGet<T extends CharacteristicValue>(character: HB.Characteristic, func: () => T): HB.Characteristic;
 export declare function isType<K extends WithUUID<{
     new (): HB.Characteristic;
-}>>(instance: HB.Characteristic, characteristic?: K): boolean;
+}>>(instance: HB.Characteristic, characteristic: K): boolean;
 export interface LoggerLike extends Partial<log4js.Logger> {
     prefix?: string;
     (msg: any): void;
