@@ -1,7 +1,7 @@
 {
   "name": "homebridge-isy",
   "displayName": "Homebridge ISY",
-  "version": "0.5.0-rc21",
+  "version": "0.5.0-rc22",
   "description": "Homebridge plugin for ISY series of home controllers from Universal Devices, Inc.",
   "note": "",
   "main": "dist/plugin.js",
@@ -16,7 +16,7 @@
   },
   "engines": {
     "node": ">12.0.0",
-    "homebridge": ">=1.0.0"
+    "homebridge": ">=1.0.0 <3.0.0"
   },
   "repository": {
     "type": "git",
