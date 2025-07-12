@@ -8,8 +8,8 @@ class ISYKeypadDimmerAccessory extends ISYDimmableAccessory_1.ISYDimmableAccesso
     constructor(device, platform) {
         ``;
         super(device, platform);
-        this.UUID = plugin_1.generate(`${device.isy.address}:${device.address}0`);
-        this.category = 5 /* LIGHTBULB */;
+        this.UUID = (0, plugin_1.generate)(`${device.isy.address}:${device.address}0`);
+        this.category = 5 /* Categories.LIGHTBULB */;
         this.displayName = this.device.displayName;
         // this.category = Categories.Pro
     }
@@ -69,7 +69,7 @@ class ISYKeypadDimmerAccessory extends ISYDimmableAccessory_1.ISYDimmableAccesso
                     break;
             }
         });
-        this.platformAccessory.category = 5 /* LIGHTBULB */;
+        this.platformAccessory.category = 5 /* Categories.LIGHTBULB */;
         this.primaryService.setPrimaryService(true);
         this.platformAccessory._associatedHAPAccessory.setPrimaryService(this.primaryService);
         // this.primaryService.getCharacteristic(Characteristic.Brightness).setProps({maxValue: this.devi;ce.OL});

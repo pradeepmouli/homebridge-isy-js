@@ -1,6 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addCallback = exports.addSetCallback = exports.addGetCallback = exports.wire = exports.clone = exports.isType = exports.onGet = exports.toFahrenheit = exports.toCelsius = exports.onSet = exports.cleanConfig = exports.isMatch = exports.Hap = exports.didFinishLaunching = void 0;
+exports.Hap = exports.didFinishLaunching = void 0;
+exports.isMatch = isMatch;
+exports.cleanConfig = cleanConfig;
+exports.onSet = onSet;
+exports.toCelsius = toCelsius;
+exports.toFahrenheit = toFahrenheit;
+exports.onGet = onGet;
+exports.isType = isType;
+exports.clone = clone;
+exports.wire = wire;
+exports.addGetCallback = addGetCallback;
+exports.addSetCallback = addSetCallback;
+exports.addCallback = addCallback;
 const isy_nodejs_1 = require("isy-nodejs");
 const ISYPlatform_1 = require("./ISYPlatform");
 exports.didFinishLaunching = Symbol('didFinishLaunching');
@@ -36,7 +48,6 @@ function isMatch(device, filter) {
     }
     return false;
 }
-exports.isMatch = isMatch;
 function cleanConfig(config) {
     if (!config.devices) {
         config.devices = [];
@@ -122,7 +133,6 @@ function cleanConfig(config) {
     }
     return config;
 }
-exports.cleanConfig = cleanConfig;
 // tslint:disable-next-line: no-namespace
 // tslint:disable-next-line: no-namespace
 function onSet(character, func, converter) {
@@ -132,17 +142,14 @@ function onSet(character, func, converter) {
         tfunc = (arg) => func(converter(character, arg));
     }
     const cfunc = addSetCallback(tfunc);
-    return character.on("set" /* SET */, cfunc);
+    return character.on("set" /* CharacteristicEventTypes.SET */, cfunc);
 }
-exports.onSet = onSet;
 function toCelsius(temp) {
     return ((temp - 32.0) * 5.0) / 9.0;
 }
-exports.toCelsius = toCelsius;
 function toFahrenheit(temp) {
     return Math.round((temp * 9.0) / 5.0 + 32.0);
 }
-exports.toFahrenheit = toFahrenheit;
 // export function onGetAsync<T>(character: characteristic.Characteristic, func: (arg: CharacteristicValue) => Promise<T>): characteristic.Characteristic {
 // 	const cfunc = addGetCallback(func)
 // 	return character.on(CharacteristicEventTypes.GET, cfunc);
@@ -151,14 +158,12 @@ function onGet(character, func) {
     const cfunc = (cb) => {
         cb(null, func());
     };
-    return character.on("get" /* GET */, cfunc);
+    return character.on("get" /* CharacteristicEventTypes.GET */, cfunc);
 }
-exports.onGet = onGet;
 // tslint:disable-next-line: new-parens
 function isType(instance, characteristic) {
     return instance instanceof characteristic || instance.UUID === characteristic.UUID;
 }
-exports.isType = isType;
 function clone(logger, prefix) {
     const copy1 = { ...logger };
     copy1.prefix = copy1.prefix = prefix !== null && prefix !== void 0 ? prefix : logger.prototype;
@@ -190,7 +195,6 @@ function clone(logger, prefix) {
     }).bind(copy);
     return copy;
 }
-exports.clone = clone;
 function wire(logger) {
     logger.isDebugEnabled = () => ISYPlatform_1.ISYPlatform.Instance.debugLoggingEnabled;
     logger.isErrorEnabled = () => true;
@@ -210,7 +214,6 @@ function wire(logger) {
         }
     }).bind(logger);
 }
-exports.wire = wire;
 // tslint:disable-next-line: only-arrow-functions
 // (service.Service.prototype as any).changeCharacteristic = (name: WithUUID<typeof Characteristic>, value: CharacteristicValue) => {
 // 	const t = this as unknown as service.Service;
@@ -234,7 +237,6 @@ function addGetCallback(func) {
         }
     };
 }
-exports.addGetCallback = addGetCallback;
 function addSetCallback(func) {
     return (arg, cb) => {
         // assumption is function has signature of (val, callback, args..)
@@ -247,7 +249,6 @@ function addSetCallback(func) {
         }
     };
 }
-exports.addSetCallback = addSetCallback;
 function addCallback(func) {
     return (arg, cb) => {
         // assumption is function has signature of (val, callback, args..)
@@ -264,5 +265,4 @@ function addCallback(func) {
         }
     };
 }
-exports.addCallback = addCallback;
 //# sourceMappingURL=utils.js.map

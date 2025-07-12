@@ -9,6 +9,6 @@ export declare let Characteristic: typeof C;
 export declare let User: typeof U;
 export declare let HAP: typeof HAPNodeJS;
 export declare let generate: (data: any) => string;
-declare const _default: (homebridge: API) => typeof globalThis;
+declare const _default: (homebridge: API) => undefined;
 export default _default;
 //# sourceMappingURL=plugin.d.ts.map

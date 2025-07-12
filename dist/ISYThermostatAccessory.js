@@ -78,16 +78,16 @@ class ISYThermostatAccessory extends ISYDeviceAccessory_1.ISYDeviceAccessory {
         // primaryService.getCharacteristic(Characteristic.TargetTemperature).on("set", this.setTargetTemperature.bind(this));
         this.primaryService.setCharacteristic(plugin_1.Characteristic.TemperatureDisplayUnits, 1);
         this.primaryService.addCharacteristic(plugin_1.Characteristic.CurrentFanState);
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.CurrentFanState).on("get" /* GET */, (f) => this.getFanMode(f));
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.CurrentTemperature).on("get" /* GET */, this.getCurrentTemperature.bind(this));
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.CoolingThresholdTemperature).on("get" /* GET */, this.getCoolSetPoint.bind(this));
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.CoolingThresholdTemperature).on("set" /* SET */, this.setCoolSetPoint.bind(this));
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.HeatingThresholdTemperature).on("get" /* GET */, this.getHeatSetPoint.bind(this));
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.HeatingThresholdTemperature).on("set" /* SET */, this.setHeatSetPoint.bind(this));
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.CurrentHeatingCoolingState).on("get" /* GET */, this.getOperatingMode.bind(this));
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.TargetHeatingCoolingState).on("get" /* GET */, this.getMode.bind(this));
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.TargetHeatingCoolingState).on("set" /* SET */, this.setHeatingCoolingMode.bind(this));
-        this.primaryService.getCharacteristic(plugin_1.Characteristic.CurrentRelativeHumidity).on("get" /* GET */, this.getHumidity.bind(this));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.CurrentFanState).on("get" /* CharacteristicEventTypes.GET */, (f) => this.getFanMode(f));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.CurrentTemperature).on("get" /* CharacteristicEventTypes.GET */, this.getCurrentTemperature.bind(this));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.CoolingThresholdTemperature).on("get" /* CharacteristicEventTypes.GET */, this.getCoolSetPoint.bind(this));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.CoolingThresholdTemperature).on("set" /* CharacteristicEventTypes.SET */, this.setCoolSetPoint.bind(this));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.HeatingThresholdTemperature).on("get" /* CharacteristicEventTypes.GET */, this.getHeatSetPoint.bind(this));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.HeatingThresholdTemperature).on("set" /* CharacteristicEventTypes.SET */, this.setHeatSetPoint.bind(this));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.CurrentHeatingCoolingState).on("get" /* CharacteristicEventTypes.GET */, this.getOperatingMode.bind(this));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.TargetHeatingCoolingState).on("get" /* CharacteristicEventTypes.GET */, this.getMode.bind(this));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.TargetHeatingCoolingState).on("set" /* CharacteristicEventTypes.SET */, this.setHeatingCoolingMode.bind(this));
+        this.primaryService.getCharacteristic(plugin_1.Characteristic.CurrentRelativeHumidity).on("get" /* CharacteristicEventTypes.GET */, this.getHumidity.bind(this));
         // primaryService
         //   .getCharacteristic(Characteristic.RotationSpeed)
         //   .on(CharacteristicEventTypes.SET, this.setThermostatRotationSpeed.bind(this));

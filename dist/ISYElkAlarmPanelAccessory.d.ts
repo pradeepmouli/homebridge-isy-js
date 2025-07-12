@@ -6,8 +6,8 @@ import { ISYAccessory } from './ISYAccessory';
 export declare class ISYElkAlarmPanelAccessory extends ISYAccessory<ELKAlarmPanelDevice, Categories.ALARM_SYSTEM> {
     alarmPanelService: any;
     setAlarmTargetState(targetStateHK: any, callback: () => void): void;
-    translateAlarmCurrentStateToHK(): 4 | 3 | 0 | 1 | 2;
-    translateAlarmTargetStateToHK(): 3 | 0 | 1 | 2;
+    translateAlarmCurrentStateToHK(): 1 | 0 | 2 | 3 | 4;
+    translateAlarmTargetStateToHK(): 1 | 0 | 2 | 3;
     translateHKToAlarmTargetState(state: number): AlarmMode.DISARMED | AlarmMode.AWAY | AlarmMode.STAY | AlarmMode.NIGHT;
     getAlarmTargetState(callback: (arg0: null, arg1: number) => void): void;
     getAlarmCurrentState(callback: (arg0: null, arg1: number) => void): void;

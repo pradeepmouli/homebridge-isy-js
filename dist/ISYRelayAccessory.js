@@ -8,7 +8,7 @@ require("./utils");
 class ISYRelayAccessory extends ISYDeviceAccessory_1.ISYDeviceAccessory {
     constructor(device, platform) {
         super(device, platform);
-        this.category = 8 /* SWITCH */;
+        this.category = 8 /* Categories.SWITCH */;
         this.dimmable = device instanceof isy_nodejs_1.InsteonDimmableDevice;
     }
     map(propertyName, propertyValue) {

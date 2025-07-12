@@ -36,17 +36,17 @@ class ISYPlatform {
         this.password = config.password;
         this.elkEnabled = (_a = config.elkEnabled) !== null && _a !== void 0 ? _a : false;
         this.debugLoggingEnabled = (_b = config.debugLoggingEnabled) !== null && _b !== void 0 ? _b : false;
-        this.config = utils_1.cleanConfig(config);
+        this.config = (0, utils_1.cleanConfig)(config);
         const self = this;
-        fs_1.writeFile(`${homebridge.user.storagePath()}/effectiveConfig.json`, JSON.stringify(this.config, null, '\t'), null, () => self.log('platform config saved to :', `${homebridge.user.storagePath()}/effectiveConfig.json`));
+        (0, fs_1.writeFile)(`${homebridge.user.storagePath()}/effectiveConfig.json`, JSON.stringify(this.config, null, '\t'), null, () => self.log('platform config saved to :', `${homebridge.user.storagePath()}/effectiveConfig.json`));
         this.homebridge = homebridge;
         ISYPlatform.Instance = this;
         config.address = this.host;
         config.displayNameFormat = (_c = config.deviceNaming) === null || _c === void 0 ? void 0 : _c.format;
-        const isylog = utils_1.clone(log, 'isy-nodejs');
+        const isylog = (0, utils_1.clone)(log, 'isy-nodejs');
         this.isy = new isy_nodejs_1.ISY(config, isylog, homebridge.user.storagePath());
         const p = this.createAccessories();
-        homebridge.on("didFinishLaunching" /* DID_FINISH_LAUNCHING */, async () => {
+        homebridge.on("didFinishLaunching" /* APIEvent.DID_FINISH_LAUNCHING */, async () => {
             self.log('Homebridge Launched');
             await p;
             self.log('ISY API Initialized');
@@ -79,7 +79,7 @@ class ISYPlatform {
         const configs = this.deviceConfigMap.get(device.address);
         if ((_a = this.config.deviceDefaults) === null || _a === void 0 ? void 0 : _a.exclude) {
             const include = configs.find((q, r, z) => {
-                return utils_1.isMatch(device, q.filter) && !q.exclude;
+                return (0, utils_1.isMatch)(device, q.filter) && !q.exclude;
             });
             if (include) {
                 this.log(`Device: ${device.displayName}`, ' will be included due to rule: ', JSON.stringify(include));
@@ -91,7 +91,7 @@ class ISYPlatform {
             const ignore = configs === null || configs === void 0 ? void 0 : configs.find((p, q, r) => p.exclude);
             if (ignore) {
                 const include = configs.find((q, r, z) => {
-                    return utils_1.isMatch(device, q.filter) && !q.exclude;
+                    return (0, utils_1.isMatch)(device, q.filter) && !q.exclude;
                 });
                 if (include) {
                     this.log(`Device: ${device.displayName} would have been ignored due to rule: `, JSON.stringify(ignore), 'but will be included due to rule: ', JSON.stringify(include));
@@ -209,7 +209,7 @@ class ISYPlatform {
             for (const device of deviceList.values()) {
                 const configs = [];
                 for (const config of that.config.devices) {
-                    if (utils_1.isMatch(device, config.filter)) {
+                    if ((0, utils_1.isMatch)(device, config.filter)) {
                         configs.push(config);
                         /* 		this.log.debug('Config', JSON.stringify(config, null, '\t'),
                                     'added for device', `${device.name}(${device.displayName})`); */
@@ -220,7 +220,7 @@ class ISYPlatform {
             for (const device of that.isy.sceneList.values()) {
                 const configs = [];
                 for (const config of that.config.devices) {
-                    if (utils_1.isMatch(device, config.filter)) {
+                    if ((0, utils_1.isMatch)(device, config.filter)) {
                         configs.push(config);
                         /* 	this.log.debug('Config', JSON.stringify(config, null, '\t'),
                                 'added for scene', device.name + '(' + device.displayName + ')'); */

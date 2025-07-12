@@ -9,7 +9,7 @@ const utils_1 = require("./utils");
 class ISYFanAccessory extends ISYDeviceAccessory_1.ISYDeviceAccessory {
     constructor(device, platform) {
         super(device, platform);
-        this.category = 3 /* FAN */;
+        this.category = 3 /* Categories.FAN */;
     }
     map(propertyName, propertyValue) {
         if (propertyName === 'motor.ST') {
@@ -37,7 +37,7 @@ class ISYFanAccessory extends ISYDeviceAccessory_1.ISYDeviceAccessory {
         }
     }
     convertFrom(characteristic, value) {
-        if (utils_1.isType(characteristic, plugin_1.Characteristic.RotationSpeed)) {
+        if ((0, utils_1.isType)(characteristic, plugin_1.Characteristic.RotationSpeed)) {
             this.logger.debug('Characteristic is RotationSpeed');
             if (value > 66.6) {
                 return isy_nodejs_1.States.Fan.High;

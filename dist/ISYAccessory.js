@@ -7,8 +7,12 @@ class AccessoryContext {
 }
 exports.AccessoryContext = AccessoryContext;
 class ISYAccessory {
+    // tslint:disable-next-line: ban-types
+    bind(func) {
+        return func.bind(this.device);
+    }
     constructor(device, platform) {
-        const s = plugin_1.generate(`${device.isy.address}:${device.address}1`);
+        const s = (0, plugin_1.generate)(`${device.isy.address}:${device.address}1`);
         this.UUID = s;
         this.name = device.name;
         this.displayName = device.displayName;
@@ -19,10 +23,6 @@ class ISYAccessory {
         this.context.address = this.address;
         this.device.on('PropertyChanged', this.handlePropertyChange.bind(this));
         this.device.on('ControlTriggered', this.handleControlTrigger.bind(this));
-    }
-    // tslint:disable-next-line: ban-types
-    bind(func) {
-        return func.bind(this.device);
     }
     map(propertyName, propertyValue) {
         const outputVal = this.convert(propertyValue, propertyName);

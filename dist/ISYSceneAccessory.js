@@ -8,7 +8,7 @@ const utils_1 = require("./utils");
 class ISYSceneAccessory extends ISYAccessory_1.ISYAccessory {
     constructor(scene, platform) {
         super(scene, platform);
-        this.category = 5 /* LIGHTBULB */;
+        this.category = 5 /* Categories.LIGHTBULB */;
         this.dimmable = scene.isDimmable;
         // this.logger = function(msg) {log("Scene Accessory: " + scene.name + ": " + msg); };
     }
@@ -30,7 +30,7 @@ class ISYSceneAccessory extends ISYAccessory_1.ISYAccessory {
         super.setupServices();
         if (this.dimmable) {
             this.primaryService = this.platformAccessory.getOrAddService(plugin_1.Service.Lightbulb);
-            utils_1.onSet(this.primaryService.getCharacteristic(plugin_1.Characteristic.Brightness), this.bind(this.device.updateBrightnessLevel)).onGet(() => this.device.brightnessLevel);
+            (0, utils_1.onSet)(this.primaryService.getCharacteristic(plugin_1.Characteristic.Brightness), this.bind(this.device.updateBrightnessLevel)).onGet(() => this.device.brightnessLevel);
         }
         else {
             this.primaryService = this.platformAccessory.getOrAddService(plugin_1.Service.Switch);
