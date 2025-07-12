@@ -1,7 +1,7 @@
 import { CharacteristicValue, WithUUID } from 'hap-nodejs';
 import * as HB from 'homebridge';
 import { Logging } from 'homebridge/lib/logger';
-import { ISYNode } from 'isy-nodejs';
+import { Node as ISYNode } from 'isy-nodejs';
 import { ISYPlatform } from './ISYPlatform';
 export declare class AccessoryContext {
     address?: string;

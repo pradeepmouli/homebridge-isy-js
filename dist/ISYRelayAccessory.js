@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ISYRelayAccessory = void 0;
-const isy_nodejs_1 = require("isy-nodejs");
 const ISYDeviceAccessory_1 = require("./ISYDeviceAccessory");
 const plugin_1 = require("./plugin");
 require("./utils");
@@ -9,7 +8,7 @@ class ISYRelayAccessory extends ISYDeviceAccessory_1.ISYDeviceAccessory {
     constructor(device, platform) {
         super(device, platform);
         this.category = 8 /* Categories.SWITCH */;
-        this.dimmable = device instanceof isy_nodejs_1.InsteonDimmableDevice;
+        this.dimmable = device.isDimmable || false;
     }
     map(propertyName, propertyValue) {
         const o = super.map(propertyName, propertyValue);

@@ -2,7 +2,7 @@ import * as log4js from '@log4js-node/log4js-api';
 import { CharacteristicGetCallback, CharacteristicSetCallback, CharacteristicValue, Service, WithUUID } from 'hap-nodejs';
 import * as HB from 'homebridge';
 import { Logging } from 'homebridge/lib/logger';
-import { ISYNode } from 'isy-nodejs';
+import { Node as ISYNode } from 'isy-nodejs';
 import { DeviceFilterRule, PlatformConfig } from 'typings/config';
 export declare const didFinishLaunching: symbol;
 export declare let Hap: any;

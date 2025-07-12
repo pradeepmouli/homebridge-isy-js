@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ISYPlatform = void 0;
 const fs_1 = require("fs");
 const isy_nodejs_1 = require("isy-nodejs");
+const InsteonMotionSensorDevice_1 = require("isy-nodejs/lib/Devices/Insteon/InsteonMotionSensorDevice");
 const ISYDimmableAccessory_1 = require("./ISYDimmableAccessory");
 const ISYDoorWindowSensorAccessory_1 = require("./ISYDoorWindowSensorAccessory");
 const ISYElkAlarmPanelAccessory_1 = require("./ISYElkAlarmPanelAccessory");
@@ -296,43 +297,43 @@ class ISYPlatform {
         });
     }
     createAccessory(device) {
-        if (device instanceof isy_nodejs_1.InsteonKeypadDimmerDevice) {
+        if (device instanceof InsteonKeypadDimmerDevice) {
             return new ISYKeypadDimmerAccessory_1.ISYKeypadDimmerAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonDimmableDevice) {
+        else if (device instanceof InsteonDimmableDevice) {
             return new ISYDimmableAccessory_1.ISYDimmableAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonRelayDevice) {
+        else if (device instanceof InsteonRelayDevice) {
             return new ISYRelayAccessory_1.ISYRelayAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonLockDevice) {
+        else if (device instanceof InsteonLockDevice) {
             return new ISYLockAccessory_1.ISYLockAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonOutletDevice) {
+        else if (device instanceof InsteonOutletDevice) {
             return new ISYOutletAccessory_1.ISYOutletAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonLeakSensorDevice) {
+        else if (device instanceof InsteonLeakSensorDevice) {
             return new ISYLeakSensorAccessory_1.ISYLeakSensorAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonSmokeSensorDevice) {
+        else if (device instanceof InsteonSmokeSensorDevice) {
             return new ISYSmokeSensorAccessory_1.ISYSmokeSensorAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonFanDevice) {
+        else if (device instanceof InsteonFanDevice) {
             return new ISYFanAccessory_1.ISYFanAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonDoorWindowSensorDevice) {
+        else if (device instanceof InsteonDoorWindowSensorDevice) {
             return new ISYDoorWindowSensorAccessory_1.ISYDoorWindowSensorAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.ELKAlarmPanelDevice) {
+        else if (device instanceof ELKAlarmPanelDevice) {
             return new ISYElkAlarmPanelAccessory_1.ISYElkAlarmPanelAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonMotionSensorDevice) {
+        else if (device instanceof InsteonMotionSensorDevice_1.InsteonMotionSensorDevice) {
             return new ISYMotionSensorAccessory_1.ISYMotionSensorAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonThermostatDevice) {
+        else if (device instanceof InsteonThermostatDevice) {
             return new ISYThermostatAccessory_1.ISYThermostatAccessory(device, this);
         }
-        else if (device instanceof isy_nodejs_1.InsteonLeakSensorDevice) {
+        else if (device instanceof InsteonLeakSensorDevice) {
             return new ISYLeakSensorAccessory_1.ISYLeakSensorAccessory(device, this);
         }
         return null;

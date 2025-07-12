@@ -2,7 +2,7 @@
 import { CharacteristicValue, WithUUID } from 'hap-nodejs';
 import * as HB from 'homebridge';
 import { Logging } from 'homebridge/lib/logger';
-import { Controls, Family, ISYNode } from 'isy-nodejs';
+import { Controls, Family, Node as ISYNode } from 'isy-nodejs';
 import { ISYPlatform } from './ISYPlatform';
 import { Characteristic, generate, PlatformAccessory, Service } from './plugin';
 import { PlatformName } from './plugin';

@@ -1,16 +1,16 @@
 
 import { Categories } from 'homebridge';
-import { InsteonDimmableDevice, InsteonRelayDevice } from 'isy-nodejs';
+import { Devices } from 'isy-nodejs';
 import { ISYDeviceAccessory } from './ISYDeviceAccessory';
 import { Characteristic, Service } from './plugin';
 import './utils';
 
-export class ISYRelayAccessory<T extends InsteonRelayDevice> extends ISYDeviceAccessory<T, Categories.SWITCH | Categories.LIGHTBULB | Categories.OUTLET> {
+export class ISYRelayAccessory<T extends Devices.Insteon.RelaySwitch | Devices.Insteon.RelayLamp> extends ISYDeviceAccessory<T, Categories.SWITCH | Categories.LIGHTBULB | Categories.OUTLET> {
 
 	constructor(device: T, platform) {
 		super(device, platform);
 		this.category = Categories.SWITCH;
-		this.dimmable = (device as any) instanceof InsteonDimmableDevice;
+		this.dimmable = (device as any).isDimmable || false;
 
 	}
 

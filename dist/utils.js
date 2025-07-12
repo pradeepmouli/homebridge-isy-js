@@ -39,7 +39,7 @@ function isMatch(device, filter) {
         return t;
     }
     if (filter.typeCode) {
-        if (device instanceof isy_nodejs_1.ISYDevice) {
+        if (device instanceof isy_nodejs_1.DeviceNode) {
             return device.typeCode.includes(filter.typeCode);
         }
     }

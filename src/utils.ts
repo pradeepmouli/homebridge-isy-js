@@ -3,7 +3,7 @@ import { CharacteristicEventTypes, CharacteristicGetCallback, CharacteristicSetC
 import * as HB from 'homebridge';
 
 import { Logger, Logging } from 'homebridge/lib/logger';
-import { Family, ISYDevice, ISYNode, ISYScene } from 'isy-nodejs';
+import { Family, DeviceNode, Node as ISYNode, Scene as ISYScene } from 'isy-nodejs';
 import { DeviceConfig, DeviceConfigDetail, DeviceFilterRule, IgnoreDeviceRule, PlatformConfig, RenameDeviceRule } from 'typings/config';
 import { ISYPlatform } from './ISYPlatform';
 import { Characteristic, PlatformAccessory } from './plugin';
@@ -45,7 +45,7 @@ export function isMatch(device: ISYNode, filter: DeviceFilterRule): boolean {
 		return t;
 	}
 	if (filter.typeCode) {
-		if (device instanceof ISYDevice) {
+		if (device instanceof DeviceNode) {
 			return device.typeCode.includes(filter.typeCode);
 		}
 	}
