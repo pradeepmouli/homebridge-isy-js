@@ -39,13 +39,14 @@ class ISYFanAccessory extends ISYDeviceAccessory_1.ISYDeviceAccessory {
     convertFrom(characteristic, value) {
         if ((0, utils_1.isType)(characteristic, plugin_1.Characteristic.RotationSpeed)) {
             this.logger.debug('Characteristic is RotationSpeed');
-            if (value > 66.6) {
+            const numValue = Number(value);
+            if (numValue > 66.6) {
                 return isy_nodejs_1.States.Fan.High;
             }
-            else if (value > 33.3) {
+            else if (numValue > 33.3) {
                 return isy_nodejs_1.States.Fan.Medium;
             }
-            else if (value > 0) {
+            else if (numValue > 0) {
                 return isy_nodejs_1.States.Fan.Low;
             }
             return isy_nodejs_1.States.Off;

@@ -205,9 +205,9 @@ export function onGet<T extends CharacteristicValue>(character: HB.Characteristi
 type T = typeof Characteristic;
 
 // tslint:disable-next-line: new-parens
-export function isType<K extends WithUUID<{new ():HB.Characteristic}>>(instance: HB.Characteristic, characteristic?: K)
+export function isType<K extends WithUUID<{new ():HB.Characteristic}>>(instance: HB.Characteristic, characteristic: K)
 {
-	return instance instanceof characteristic || instance.UUID === characteristic.UUID;
+	return characteristic && (instance instanceof characteristic || (instance as any).UUID === (characteristic as any).UUID);
 }
 
 // declare module 'homebridge/node_modules/homebridge/node_modules/hap-nodejs/dist/lib/Service' {

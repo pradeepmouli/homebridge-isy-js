@@ -162,7 +162,7 @@ function onGet(character, func) {
 }
 // tslint:disable-next-line: new-parens
 function isType(instance, characteristic) {
-    return instance instanceof characteristic || instance.UUID === characteristic.UUID;
+    return characteristic && (instance instanceof characteristic || instance.UUID === characteristic.UUID);
 }
 function clone(logger, prefix) {
     const copy1 = { ...logger };

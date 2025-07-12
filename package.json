@@ -46,7 +46,7 @@
     "@types/node": "",
     "fake-isy-994i": "",
     "hap-nodejs": "^0.7.3",
-    "homebridge": "^1.1.0",
+    "homebridge": "^1.10.0",
     "mocha": "",
     "npm": "^6.14.4",
     "p-try": "^2.2.0",

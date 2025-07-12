@@ -19,7 +19,7 @@ export declare function toFahrenheit(temp: number): any;
 export declare function onGet<T extends CharacteristicValue>(character: HB.Characteristic, func: () => T): HB.Characteristic;
 export declare function isType<K extends WithUUID<{
     new (): HB.Characteristic;
-}>>(instance: HB.Characteristic, characteristic?: K): boolean;
+}>>(instance: HB.Characteristic, characteristic: K): boolean;
 export interface LoggerLike extends Partial<log4js.Logger> {
     prefix?: string;
     (msg: any): void;

@@ -10,7 +10,7 @@ export class ISYRelayAccessory<T extends InsteonRelayDevice> extends ISYDeviceAc
 	constructor(device: T, platform) {
 		super(device, platform);
 		this.category = Categories.SWITCH;
-		this.dimmable = device instanceof InsteonDimmableDevice;
+		this.dimmable = (device as any) instanceof InsteonDimmableDevice;
 
 	}
 

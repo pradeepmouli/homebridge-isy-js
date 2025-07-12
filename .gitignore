@@ -9,3 +9,4 @@ ISYConfigDump.json
 ISYStatusDump.json
 ISYStatusDump.json
 .DS_Store
+dist/
