@@ -43,21 +43,21 @@
     "Siri"
   ],
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
     "@types/node": "",
+    "babel-plugin-module-resolver": "^4.0.0",
     "fake-isy-994i": "",
     "hap-nodejs": "^0.7.3",
     "homebridge": "^1.10.0",
     "mocha": "",
     "npm": "^6.14.4",
     "p-try": "^2.2.0",
-    "path-exists": "^4.0.0",
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "babel-plugin-module-resolver": "^4.0.0"
+    "path-exists": "^4.0.0"
   },
   "dependencies": {
     "@log4js-node/log4js-api": "^1.0.2",
-    "isy-nodejs": "^0.5.0-beta.55",
+    "isy-nodejs": "^1.3.24",
     "path": "^0.12.7",
     "xmldoc": "^1.1.2"
   },
